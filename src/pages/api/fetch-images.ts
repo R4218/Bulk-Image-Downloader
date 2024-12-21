@@ -9,7 +9,7 @@ interface FetchImagesResponse {
 
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse<FetchImagesResponse>
+  res: NextApiResponse<FetchImagesResponse | Buffer>
 ) {
   if (req.method === "POST") {
     const { url } = req.body;
@@ -45,12 +45,14 @@ export default async function handler(
         throw new Error(`Failed to fetch image: ${imgUrl}`);
       }
 
-      const buffer = await response.arrayBuffer();
+      const arrayBuffer = await response.arrayBuffer();
+      const buffer = Buffer.from(arrayBuffer);
+
       res.setHeader(
         "Content-Type",
         response.headers.get("Content-Type") || "application/octet-stream"
       );
-      res.send(Buffer.from(buffer));
+      res.send(buffer); // Sending the binary data directly
     } catch {
       res.status(500).json({ error: "Failed to fetch image binary." });
     }
