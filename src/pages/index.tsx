@@ -1,5 +1,6 @@
 import JSZip from "jszip";
 import Head from "next/head";
+import Image from "next/image";
 import { useState } from "react";
 
 export default function Home() {
@@ -25,7 +26,7 @@ export default function Home() {
       } else {
         setError(data.error);
       }
-    } catch (err) {
+    } catch {
       setError("An error occurred while fetching images.");
     }
   };
@@ -64,11 +65,10 @@ export default function Home() {
       setTimeout(() => {
         setPopupMessage(null);
       }, 3000);
-    } catch (err) {
+    } catch {
       setError(
         "An error occurred while downloading the images. Some URLs may be blocked."
       );
-      console.error(err);
     } finally {
       setIsProcessing(false);
     }
@@ -87,9 +87,8 @@ export default function Home() {
       link.href = URL.createObjectURL(blob);
       link.download = imgUrl.split("/").pop() || "image.jpg";
       link.click();
-    } catch (err) {
+    } catch {
       setError("Failed to download the image.");
-      console.error(err);
     }
   };
 
@@ -169,9 +168,11 @@ export default function Home() {
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
             {images.slice(0, visibleImages).map((img, idx) => (
               <div key={idx} className="relative group">
-                <img
+                <Image
                   src={img}
                   alt="Fetched"
+                  width={128}
+                  height={128}
                   className="w-full h-32 object-cover"
                 />
 

@@ -29,7 +29,7 @@ export default async function handler(
       });
 
       res.status(200).json({ imageUrls });
-    } catch (error) {
+    } catch {
       res.status(500).json({ error: "Failed to fetch images from the URL." });
     }
   } else if (req.method === "GET") {
@@ -51,8 +51,7 @@ export default async function handler(
         response.headers.get("Content-Type") || "application/octet-stream"
       );
       res.send(Buffer.from(buffer));
-    } catch (error) {
-      console.error(error);
+    } catch {
       res.status(500).json({ error: "Failed to fetch image binary." });
     }
   } else {
