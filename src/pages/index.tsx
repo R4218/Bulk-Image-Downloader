@@ -126,6 +126,7 @@ export default function Home() {
           content="bulk image downloader, image download tool, download images, zip images"
         />
         <meta name="author" content="WebVives" />
+        <meta name="robots" content="index, follow" />
         <meta property="og:title" content="Bulk Image Downloader" />
         <meta
           property="og:description"
